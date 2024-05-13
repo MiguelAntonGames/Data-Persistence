@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class MainManager : MonoBehaviour
 {
@@ -10,8 +10,8 @@ public class MainManager : MonoBehaviour
     public int LineCount = 6;
     public Rigidbody Ball;
 
-    public Text ScoreText;
-    public GameObject GameOverText;
+    public TextMeshProUGUI ScoreText;
+    public GameObject GameOverMessage;
     
     private bool _started = false;
     private int _points;
@@ -70,6 +70,6 @@ public class MainManager : MonoBehaviour
     public void GameOver()
     {
         _gameOver = true;
-        GameOverText.SetActive(true);
+        GameOverMessage.SetActive(true);
     }
 }
