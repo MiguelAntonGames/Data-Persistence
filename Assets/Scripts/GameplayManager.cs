@@ -28,6 +28,13 @@ public class GameplayManager : MonoBehaviour {
     }
 
     void Start() {
+        MainManager.Instance.OnNewHighScore += OnNewHighScore;
+        UpdateScoreUI();
+        if (MainManager.Instance.HighScore == 0) {
+            _bestScoreText.text = $"Best Score: 0";
+        } else {
+            _bestScoreText.text = $"Best Score: {MainManager.Instance.HighScorePlayerName}: {MainManager.Instance.HighScore}";
+        }
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         int[] pointCountArray = new[] { 1, 1, 2, 2, 5, 5 };
@@ -55,6 +62,8 @@ public class GameplayManager : MonoBehaviour {
         } else if (_gameOver) {
             if (Input.GetKeyDown(KeyCode.Space)) {
                 MainManager.Instance.RestartGame();
+            } else if (Input.GetKeyDown(KeyCode.Escape)) {
+                MainManager.Instance.ReturnToMainMenu();
             }
         }
     }
@@ -67,11 +76,19 @@ public class GameplayManager : MonoBehaviour {
     public void GameOver() {
         _gameOver = true;
         _gameOverMessage.SetActive(true);
+        MainManager.Instance.OnGameOver(_points);
         UpdateScoreUI();
     }
 
     private void UpdateScoreUI() {
         _scoreText.text = $"Score: {_points}";
+    }
+    private void OnNewHighScore() {
+        _bestScoreText.text = $"Best Score: {MainManager.Instance.HighScorePlayerName}: {MainManager.Instance.HighScore}";
+    }
+
+    private void OnDestroy() {
+        MainManager.Instance.OnNewHighScore -= OnNewHighScore;
     }
 
 }
