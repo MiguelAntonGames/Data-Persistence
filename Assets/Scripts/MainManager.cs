@@ -13,10 +13,9 @@ public class MainManager : MonoBehaviour
     public Text ScoreText;
     public GameObject GameOverText;
     
-    private bool m_Started = false;
-    private int m_Points;
-    
-    private bool m_GameOver = false;
+    private bool _started = false;
+    private int _points;
+    private bool _gameOver = false;
 
     
     // Start is called before the first frame update
@@ -33,18 +32,18 @@ public class MainManager : MonoBehaviour
                 Vector3 position = new Vector3(-1.5f + step * x, 2.5f + i * 0.3f, 0);
                 var brick = Instantiate(BrickPrefab, position, Quaternion.identity);
                 brick.PointValue = pointCountArray[i];
-                brick.onDestroyed.AddListener(AddPoint);
+                brick.OnDestroyed.AddListener(AddPoint);
             }
         }
     }
 
     private void Update()
     {
-        if (!m_Started)
+        if (!_started)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                m_Started = true;
+                _started = true;
                 float randomDirection = Random.Range(-1.0f, 1.0f);
                 Vector3 forceDir = new Vector3(randomDirection, 1, 0);
                 forceDir.Normalize();
@@ -53,7 +52,7 @@ public class MainManager : MonoBehaviour
                 Ball.AddForce(forceDir * 2.0f, ForceMode.VelocityChange);
             }
         }
-        else if (m_GameOver)
+        else if (_gameOver)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -64,13 +63,13 @@ public class MainManager : MonoBehaviour
 
     void AddPoint(int point)
     {
-        m_Points += point;
-        ScoreText.text = $"Score : {m_Points}";
+        _points += point;
+        ScoreText.text = $"Score : {_points}";
     }
 
     public void GameOver()
     {
-        m_GameOver = true;
+        _gameOver = true;
         GameOverText.SetActive(true);
     }
 }
