@@ -9,7 +9,7 @@ public class MainManager : MonoBehaviour {
     [HideInInspector] public string CurrentPlayerName = string.Empty;
     [HideInInspector] public string HighScorePlayerName = string.Empty;
     [HideInInspector] public int HighScore;
-    public static MainManager Instance;
+    public static MainManager Instance { get; private set; };
     public Action OnNewHighScore;
     private const string SAVE_FILE_NAME = "/savefile.json";
 

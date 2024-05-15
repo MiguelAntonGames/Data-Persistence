@@ -13,7 +13,7 @@ public class GameplayManager : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI _scoreText;
     [SerializeField] private GameObject _gameOverMessage;
 
-    public static GameplayManager Instance;
+    public static GameplayManager Instance { get; private set; }
 
     private bool _gameHasStarted = false;
     private int _points;
